@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mô phỏng trực quan về vi tích phân thông qua chiếc xe máy - Đạo hàm, vi phân, nguyên hàm và tích phân trong đời thực">
+    <title>Vi Tích Phân Qua Chiếc Xe Máy</title>
+
+    <!-- MathJax để hiển thị công thức toán học chuẩn LaTeX -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #ecf0f1;
+            --panel-bg-color: #ffffff;
+            --text-color: #34495e;
+            --gauge-bg: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: var(--panel-bg-color);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--secondary-color), #1a252f);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><path d="M30,30 L70,30 L70,70 L30,70 Z" fill="white"/><circle cx="50" cy="50" r="20" fill="white"/></svg>');
+            background-size: 100px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            min-height: 500px;
+        }
+
+        #dashboard {
+            flex: 1;
+            min-width: 350px;
+            padding: 20px;
+            background: linear-gradient(to bottom, #34495e, #2c3e50);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            position: relative;
+        }
+        
+        .dashboard-title {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .speedometer-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+        
+        .speedometer {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .digital-displays {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .display-box {
+            background: rgba(26, 37, 47, 0.8);
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            border: 2px solid #4a6278;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+        
+        .display-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .display-box .label {
+            font-size: 0.85rem;
+            color: #bdc3c7;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .display-box .value {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #32ff7e;
+            letter-spacing: 1px;
+            display: block;
+        }
+        
+        #lecture {
+            flex: 1.5;
+            min-width: 400px;
+            padding: 30px;
+            overflow-y: auto;
+            max-height: 600px;
+        }
+        
+        #lecture h2 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin: 25px 0 15px;
+            font-size: 1.4rem;
+        }
+        
+        #lecture h2:first-child {
+            margin-top: 0;
+        }
+        
+        #lecture p, #lecture ul {
+            margin-bottom: 15px;
+        }
+        
+        #lecture ul {
+            padding-left: 20px;
+        }
+        
+        #lecture li {
+            margin-bottom: 8px;
+        }
+        
+        .concept-box {
+            background: #eaf5ff;
+            border-left: 5px solid var(--primary-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .concept-box strong {
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .math-formula {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 1.2rem;
+            font-family: 'Cambria Math', serif;
+        }
+        
+        .controls {
+            padding: 20px;
+            background: #dfe6e9;
+            text-align: center;
+            border-top: 1px solid #bdc3c7;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .throttle-container {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+        
+        .throttle-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: #bdc3c7;
+            outline: none;
+            cursor: pointer;
+            -webkit-appearance: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            background: #2980b9;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            color: white;
+            transition: var(--transition);
+            min-width: 120px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        button:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+        
+        #startBtn { 
+            background-color: var(--success-color);
+        }
+        
+        #startBtn:hover { 
+            background-color: #229954;
+            transform: translateY(-2px);
+        }
+        
+        #resetBtn { 
+            background-color: var(--danger-color);
+        }
+        
+        #resetBtn:hover { 
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+            background-color: #7f8c8d;
+        }
+        
+        .status-active {
+            background-color: var(--success-color);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            #dashboard, #lecture {
+                min-width: 100%;
+            }
+            
+            #lecture {
+                max-height: none;
+            }
+            
+            .speedometer-container {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .digital-displays {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            header {
+                padding: 15px 10px;
+            }
+            
+            #dashboard, #lecture {
+                padding: 15px;
+            }
+            
+            .speedometer-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .display-box .value {
+                font-size: 1.5rem;
+            }
+            
+            .control-group {
+                flex-direction: column;
+            }
+            
+            .throttle-container {
+                min-width: 100%;
+            }
+        }
+
+        /* MathJax loading indicator */
+        .math-loading {
+            color: var(--warning-color);
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Câu Chuyện Của Chiếc Xe Máy: Vi Tích Phân Trong Đời Thực</h1>
+    </header>
+    
+    <div class="main-content">
+        <div id="dashboard">
+            <div class="dashboard-title">BẢNG ĐIỀU KHIỂN XE MÁY</div>
+            
+            <div class="speedometer-container">
+                <svg class="speedometer" viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="#bdc3c7" stroke-width="5" />
+                    <path d="M 34 150 A 80 80 0 1 1 166 150" fill="none" stroke="#7f8c8d" stroke-width="20" />
+                    <path d="M 34 150 A 80 80 0 1 1 166 150" fill="none" stroke="url(#speedGradient)" stroke-width="20" id="speed-arc" stroke-dasharray="377" stroke-dashoffset="377"/>
+                    <defs>
+                        <linearGradient id="speedGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" style="stop-color:#2ecc71;stop-opacity:1" />
+                          <stop offset="50%" style="stop-color:#f1c40f;stop-opacity:1" />
+                          <stop offset="100%" style="stop-color:#e74c3c;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Ticks and numbers -->
+                    <g id="ticks-container"></g>
+                    
+                    <polygon id="needle" points="100,20 95,100 105,100" fill="#e74c3c" transform="rotate(-120 100 100)" style="transition: transform 0.5s ease;"/>
+                    <circle cx="100" cy="100" r="5" fill="#2c3e50" stroke="white" stroke-width="2" />
+                    <text x="100" y="140" text-anchor="middle" fill="white" font-size="24" font-weight="bold" id="speed-text">0</text>
+                    <text x="100" y="160" text-anchor="middle" fill="#bdc3c7" font-size="12">km/h</text>
+                </svg>
+            </div>
+            
+            <div class="digital-displays">
+                <div class="display-box">
+                    <span class="label">HÀM QUÃNG ĐƯỜNG <br>(Nguyên hàm của vận tốc)</span>
+                    <span class="value" id="odometer">0.0</span> km
+                </div>
+                 <div class="display-box">
+                    <span class="label">TÍCH PHÂN XÁC ĐỊNH<br>(Quãng đường chuyến đi)</span>
+                    <span class="value" id="integral">0.0</span> km
+                </div>
+                <div class="display-box">
+                    <span class="label">THỜI GIAN CHUYẾN ĐI</span>
+                    <span class="value" id="timer">0.0</span> s
+                </div>
+            </div>
+        </div>
+        
+        <div id="lecture">
+            <h2>1. Bài Toán Từ Cuộc Sống: Hai Mặt Đồng Hồ</h2>
+            <p>Trên bảng đồng hồ của xe máy, có hai "nhân vật" chính:</p>
+            <ul>
+                <li><strong>Kim chỉ vận tốc:</strong> Cho biết tốc độ tức thời tại thời điểm hiện tại.</li>
+                <li><strong>Công tơ mét:</strong> Hiển thị tổng quãng đường đã đi — kết quả của quá trình <em>tích lũy liên tục</em>.</li>
+            </ul>
+            <p>Mối quan hệ giữa chúng chính là nền tảng của <strong>Vi Tích Phân</strong>.</p>
+
+            <h2>2. Đạo Hàm: Tốc Độ Thay Đổi Tức Thời</h2>
+            <p>Gọi \( S(t) \) là quãng đường đã đi tính đến thời điểm \( t \) (đơn vị: km). Khi đó, <strong>vận tốc tức thời</strong> \( v(t) \) chính là <strong>đạo hàm</strong> của \( S(t) \):</p>
+            <div class="concept-box">
+                <strong>Đạo hàm = Vận tốc tức thời</strong>
+                <div class="math-formula">
+                    $$ v(t) = \frac{dS}{dt} = S'(t) $$
+                </div>
+                <p>Đạo hàm cho ta biết "quãng đường đang thay đổi nhanh thế nào <em>ngay lúc này</em>".</p>
+            </div>
+
+            <h2>3. Vi Phân: Những Mảnh Ghép Vô Cùng Nhỏ</h2>
+            <p>Trong thời gian rất ngắn \( dt \), xe đi được một đoạn đường rất nhỏ \( dS \). Mối quan hệ này được gọi là <strong>vi phân</strong>:</p>
+            <div class="concept-box">
+                <strong>Vi phân quãng đường</strong>
+                <div class="math-formula">
+                    $$ dS = v(t) \, dt $$
+                </div>
+                <p>Đây là "viên gạch" cơ bản để xây dựng tích phân.</p>
+            </div>
+
+            <h2>4. Nguyên Hàm & Tích Phân: Tích Lũy Từ Những Vi Phân</h2>
+            <p><strong>Nguyên hàm</strong> của \( v(t) \) là hàm \( S(t) \) sao cho \( S'(t) = v(t) \). Trong thực tế, công tơ mét hiển thị giá trị của \( S(t) \) (giả sử \( S(0) = 0 \)).</p>
+            <p><strong>Tích phân xác định</strong> từ thời điểm \( a \) đến \( b \) cho biết quãng đường đi được trong khoảng thời gian đó:</p>
+            <div class="concept-box">
+                <strong>Tích phân = Tổng các vi phân</strong>
+                <div class="math-formula">
+                    $$ \int_{a}^{b} v(t) \, dt = S(b) - S(a) $$
+                </div>
+                <p>Đây chính là <em>quãng đường chuyến đi</em> — hiệu số giữa hai giá trị của nguyên hàm.</p>
+            </div>
+
+            <h2>5. Hướng Dẫn Tương Tác</h2>
+            <p>Hãy thử "lái xe"! Dùng thanh trượt "TAY GA" để thay đổi vận tốc. Bấm "Bắt đầu" và quan sát:</p>
+            <ul>
+                <li>Khi tăng ga, <strong>vận tốc \( v(t) \)</strong> tăng → <strong>đạo hàm</strong> tăng.</li>
+                <li><strong>Hàm quãng đường \( S(t) \)</strong> (nguyên hàm) tăng nhanh hơn.</li>
+                <li><strong>Tích phân xác định</strong> (quãng đường chuyến đi) cũng tăng theo.</li>
+                <li>Thay đổi vận tốc đột ngột → đạo hàm thay đổi, nhưng tích phân vẫn liên tục.</li>
+            </ul>
+            <p class="math-loading">Đang tải công thức toán học...</p>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <div class="control-group">
+            <div class="throttle-container">
+                <div class="throttle-label">
+                    <span>TAY GA</span>
+                    <span id="throttle-value">0 km/h</span>
+                </div>
+                <input type="range" id="throttle" min="0" max="120" value="0" step="1" aria-label="Điều chỉnh tốc độ xe">
+            </div>
+            
+            <div class="buttons">
+                <button id="startBtn">
+                    <span class="status-indicator" id="statusIndicator"></span>
+                    Bắt đầu
+                </button>
+                <button id="resetBtn">Làm lại</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // DOM Elements
+    const needle = document.getElementById('needle');
+    const speedText = document.getElementById('speed-text');
+    const speedArc = document.getElementById('speed-arc');
+    const odometerDisplay = document.getElementById('odometer');
+    const integralDisplay = document.getElementById('integral');
+    const timerDisplay = document.getElementById('timer');
+    const throttle = document.getElementById('throttle');
+    const throttleValue = document.getElementById('throttle-value');
+    const startBtn = document.getElementById('startBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const statusIndicator = document.getElementById('statusIndicator');
+    const ticksContainer = document.getElementById('ticks-container');
+    const mathLoading = document.querySelector('.math-loading');
+
+    // Hide loading message when MathJax finishes
+    window.addEventListener('load', () => {
+        if (typeof MathJax !== 'undefined') {
+            MathJax.startup.promise.then(() => {
+                if (mathLoading) mathLoading.style.display = 'none';
+            });
+        } else {
+            if (mathLoading) mathLoading.style.display = 'none';
+        }
+    });
+
+    // Simulation State
+    let isRunning = false;
+    let totalDistance = 0;   // S(t): nguyên hàm (hàm quãng đường)
+    let tripDistance = 0;    // ∫ v(t) dt từ t=0 → hiện tại
+    let elapsedTime = 0;     // Thời gian chuyến đi
+    let simulationInterval;
+    const maxSpeed = 120;
+    const updateRate = 50; // ms
+
+    // -- SETUP --
+    function setupGauge() {
+        const angleRange = 240;
+        const numTicks = 13;
+        ticksContainer.innerHTML = '';
+        
+        for (let i = 0; i < numTicks; i++) {
+            const speed = i * 10;
+            const angle = -120 + (i * (angleRange / (numTicks - 1)));
+            const isMajorTick = i % 2 === 0;
+            const tickLength = isMajorTick ? 15 : 8;
+            const tickColor = isMajorTick ? "white" : "#bdc3c7";
+
+            const x1 = 100 + 80 * Math.cos((angle - 90) * Math.PI / 180);
+            const y1 = 100 + 80 * Math.sin((angle - 90) * Math.PI / 180);
+            const x2 = 100 + (80 - tickLength) * Math.cos((angle - 90) * Math.PI / 180);
+            const y2 = 100 + (80 - tickLength) * Math.sin((angle - 90) * Math.PI / 180);
+
+            const tick = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            tick.setAttribute("x1", x1);
+            tick.setAttribute("y1", y1);
+            tick.setAttribute("x2", x2);
+            tick.setAttribute("y2", y2);
+            tick.setAttribute("stroke", tickColor);
+            tick.setAttribute("stroke-width", isMajorTick ? 2 : 1);
+            ticksContainer.appendChild(tick);
+
+            if (isMajorTick) {
+                const textX = 100 + (80 - 25) * Math.cos((angle - 90) * Math.PI / 180);
+                const textY = 100 + (80 - 25) * Math.sin((angle - 90) * Math.PI / 180);
+                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                text.setAttribute("x", textX);
+                text.setAttribute("y", textY);
+                text.setAttribute("text-anchor", "middle");
+                text.setAttribute("alignment-baseline", "middle");
+                text.setAttribute("fill", "white");
+                text.setAttribute("font-size", "10");
+                text.textContent = speed;
+                ticksContainer.appendChild(text);
+            }
+        }
+    }
+
+    function updateSpeedometer(speed) {
+        speedText.textContent = speed;
+        throttleValue.textContent = `${speed} km/h`;
+        const angle = (speed / maxSpeed) * 240 - 120;
+        needle.style.transform = `rotate(${angle}deg)`;
+        const arcLength = 377;
+        const offset = arcLength - (speed / maxSpeed) * arcLength;
+        speedArc.style.strokeDashoffset = offset;
+    }
+
+    function updateDisplays() {
+        odometerDisplay.textContent = totalDistance.toFixed(2);
+        integralDisplay.textContent = tripDistance.toFixed(2);
+        timerDisplay.textContent = elapsedTime.toFixed(1);
+    }
+
+    function simulationLoop() {
+        if (!isRunning) return;
+        const currentSpeedKmh = parseFloat(throttle.value);
+        const currentSpeedKms = currentSpeedKmh / 3600;
+        const dt = updateRate / 1000;
+        const dS = currentSpeedKms * dt;
+
+        totalDistance += dS;
+        tripDistance += dS;
+        elapsedTime += dt;
+
+        updateDisplays();
+    }
+
+    throttle.addEventListener('input', (e) => {
+        const speed = parseInt(e.target.value);
+        updateSpeedometer(speed);
+    });
+
+    startBtn.addEventListener('click', () => {
+        isRunning = !isRunning;
+        if (isRunning) {
+            startBtn.innerHTML = '<span class="status-indicator status-active"></span>Tạm Dừng';
+            startBtn.style.backgroundColor = '#f39c12';
+            simulationInterval = setInterval(simulationLoop, updateRate);
+        } else {
+            startBtn.innerHTML = '<span class="status-indicator"></span>Tiếp Tục';
+            startBtn.style.backgroundColor = '#27ae60';
+            clearInterval(simulationInterval);
+        }
+    });
+
+    resetBtn.addEventListener('click', () => {
+        isRunning = false;
+        clearInterval(simulationInterval);
+        startBtn.innerHTML = '<span class="status-indicator"></span>Bắt đầu';
+        startBtn.style.backgroundColor = '#27ae60';
+
+        tripDistance = 0;
+        elapsedTime = 0;
+        throttle.value = 0;
+        updateSpeedometer(0);
+        updateDisplays();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowUp' || e.key === 'ArrowRight') {
+            e.preventDefault();
+            throttle.value = Math.min(parseInt(throttle.value) + 5, maxSpeed);
+            updateSpeedometer(parseInt(throttle.value));
+        } else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            throttle.value = Math.max(parseInt(throttle.value) - 5, 0);
+            updateSpeedometer(parseInt(throttle.value));
+        } else if (e.key === ' ' || e.key === 'Spacebar') {
+            e.preventDefault();
+            startBtn.click();
+        } else if (e.key === 'r' || e.key === 'R') {
+            e.preventDefault();
+            resetBtn.click();
+        }
+    });
+
+    setupGauge();
+    updateSpeedometer(0);
+    updateDisplays();
+</script>
+
+</body>
+</html>
