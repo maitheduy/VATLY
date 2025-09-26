@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gian Bếp Của Vũ Trụ: Bài Giảng Về Hệ SI</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> <!-- Font Awesome cho icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+        }
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .card {
+            background: #ecf0f1;
+            border: 1px solid #bdc3c7;
+            border-left: 5px solid #3498db;
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #3498db;
+            border: none;
+            font-size: 1.5em;
+        }
+        .card .icon {
+            font-size: 2.5em;
+            color: #3498db;
+            float: right;
+        }
+        .metaphor {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+        .highlight {
+            background-color: #e8f4fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #2980b9;
+            margin: 30px 0;
+        }
+        .interactive-kitchen {
+            background-color: #e9f5e9;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px dashed #27ae60;
+            margin-top: 30px;
+        }
+        .interactive-kitchen select, .interactive-kitchen button {
+            padding: 10px;
+            font-size: 1em;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .interactive-kitchen button {
+            background-color: #27ae60;
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .interactive-kitchen button:hover {
+            background-color: #229954;
+        }
+        #recipe-result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 5px;
+            min-height: 50px;
+            font-size: 1.1em;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1><i class="fas fa-flask"></i> Gian Bếp Của Vũ Trụ</h1>
+        <p>Chào các nhà khoa học trẻ! Chào mừng các em đến với phòng thí nghiệm đặc biệt nhất, nơi chúng ta không chỉ học vật lý, mà còn "nấu" nên các khái niệm vật lý. Hôm nay, chúng ta sẽ khám phá bí mật của Hệ đo lường SI, và trả lời một câu hỏi cực kỳ thú vị: Tại sao có những đơn vị là "nguyên liệu", còn những đơn vị khác lại là "món ăn"?</p>
+
+        <h2><i class="fas fa-cubes"></i> 7 Nguyên Liệu Sơ Khai Của Thực Tại</h2>
+        <p>Để nấu mọi món ăn trên đời, một đầu bếp giỏi chỉ cần một vài nguyên liệu cơ bản. Tương tự, để mô tả toàn bộ vũ trụ, các nhà khoa học đã khám phá ra rằng chúng ta chỉ cần <strong>7 đơn vị cơ sở (Base Units)</strong>. Đây là 7 "nguyên liệu sơ khai", độc lập với nhau.</p>
+
+        <div class="card-container">
+            <div class="card">
+                <i class="fas fa-ruler-horizontal icon"></i>
+                <h3>Mét (m)</h3>
+                <p class="metaphor">"Gia Vị Không Gian"</p>
+                <p>Đo lường khoảng cách và chiều dài. Đây là cây thước của chúng ta.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-stopwatch icon"></i>
+                <h3>Giây (s)</h3>
+                <p class="metaphor">"Dòng Chảy Bất Biến"</p>
+                <p>Đo lường thời gian. Đây là chiếc đồng hồ của chúng ta.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-weight-hanging icon"></i>
+                <h3>Kilogam (kg)</h3>
+                <p class="metaphor">"Bột Thực Tại"</p>
+                <p>Đo lường khối lượng và quán tính, tức là "lượng vật chất" trong một vật.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-bolt icon"></i>
+                <h3>Ampe (A)</h3>
+                <p class="metaphor">"Dòng Sông Điện Tích"</p>
+                <p>Đo lường dòng điện, mở ra thế giới của điện và từ trường.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-thermometer-half icon"></i>
+                <h3>Kelvin (K)</h3>
+                <p class="metaphor">"Mức Độ Rung Động Vi Mô"</p>
+                <p>Đo lường nhiệt độ nhiệt động lực học, tức năng lượng chuyển động của các hạt.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-atom icon"></i>
+                <h3>Mol (mol)</h3>
+                <p class="metaphor">"Chiếc Cầu Nối Vi Mô"</p>
+                <p>Dùng để "đếm" số lượng nguyên tử hoặc phân tử, đơn vị của các nhà hóa học.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-lightbulb icon"></i>
+                <h3>Candela (cd)</h3>
+                <p class="metaphor">"Ngọn Nến Chuẩn"</p>
+                <p>Đo lường cường độ sáng theo cảm nhận của mắt người.</p>
+            </div>
+        </div>
+
+        <div class="highlight">
+            <h2><i class="fas fa-question-circle"></i> Câu Hỏi Trọng Tâm: Vậy m/s ở đâu?</h2>
+            <p>Các em có thấy không? Trong 7 "nguyên liệu sơ khai" này, không hề có <strong>mét trên giây (m/s)</strong>! Tại sao một đại lượng quen thuộc như vận tốc lại không được coi là cơ bản?</p>
+            <p>Câu trả lời rất đơn giản và thanh lịch: <strong>Vì m/s không phải là "nguyên liệu", nó là "món ăn"!</strong>. Cụ thể hơn, m/s là một <strong>đơn vị dẫn xuất (Derived Unit)</strong>. Nó được "nấu" ra từ các đơn vị cơ sở.</p>
+            <p>Hãy nghĩ xem: một chiếc bánh mì kẹp thịt không phải là nguyên liệu cơ bản. Nó được làm từ các nguyên liệu cơ bản như bánh mì, thịt, rau... Tương tự, "vận tốc" được làm từ "mét" và "giây" theo công thức: <strong>mét chia cho giây</strong>.</p>
+        </div>
+
+        <div class="interactive-kitchen">
+            <h2><i class="fas fa-blender"></i> Góc Bếp Tương Tác: Tự Tay "Nấu" Vật Lý!</h2>
+            <p>Bây giờ đến phần vui nhất! Các em hãy thử làm đầu bếp. Chọn 2 nguyên liệu, một phép toán, và xem chúng ta có thể tạo ra món ăn gì nhé!</p>
+            
+            <select id="ingredient1">
+                <option value="m">Mét (m)</option>
+                <option value="s">Giây (s)</option>
+                <option value="kg">Kilogam (kg)</option>
+                <option value="m/s">Vận tốc (m/s)</option>
+            </select>
+
+            <select id="operator">
+                <option value="multiply">* (Nhân)</option>
+                <option value="divide">/ (Chia)</option>
+            </select>
+
+            <select id="ingredient2">
+                <option value="s">Giây (s)</option>
+                <option value="m">Mét (m)</option>
+                <option value="kg">Kilogam (kg)</option>
+            </select>
+
+            <button onclick="cookDish()">Nấu ngay!</button>
+
+            <div id="recipe-result">
+                <p>Kết quả sẽ hiện ở đây...</p>
+            </div>
+        </div>
+
+        <h2><i class="fas fa-book-open"></i> Lời Kết: Vẻ Đẹp Của Hệ Thống</h2>
+        <p>Các em thấy đấy, Hệ SI được xây dựng một cách cực kỳ thông minh. Thay vì phải định nghĩa hàng trăm đơn vị khác nhau, chúng ta chỉ cần 7 viên gạch nền tảng. Mọi khái niệm vật lý khác, từ Lực (Newton) đến Năng lượng (Joule), đều là những tòa lâu đài tráng lệ được xây nên từ 7 viên gạch đó. Việc m/s không phải là đơn vị cơ sở không làm nó kém quan trọng đi, mà ngược lại, nó cho thấy vẻ đẹp và sức mạnh của cả một hệ thống logic và nhất quán.</p>
+
+        <div class="footer">
+            <p>Bài giảng được tạo ra bởi Trí tuệ Nhân tạo với niềm đam mê Vật lý. Chúc các em học tập vui vẻ!</p>
+        </div>
+
+    </div>
+
+    <script>
+        function cookDish() {
+            const ing1 = document.getElementById('ingredient1').value;
+            const op = document.getElementById('operator').value;
+            const ing2 = document.getElementById('ingredient2').value;
+            const resultDiv = document.getElementById('recipe-result');
+
+            let resultHTML = '';
+
+            // Recipe for Velocity
+            if (ing1 === 'm' && op === 'divide' && ing2 === 's') {
+                resultHTML = `
+                    <h3>Chúc mừng! Em đã tạo ra Vận tốc!</h3>
+                    <p><strong>Công thức:</strong> Mét / Giây</p>
+                    <p><strong>Đơn vị:</strong> m/s</p>
+                    <p><em>Đây là "món ăn" đầu tiên và cơ bản nhất, cho chúng ta biết "hương vị của sự dịch chuyển", mô tả một vật đi nhanh hay chậm.</em></p>
+                `;
+            }
+            // Recipe for Acceleration
+            else if (ing1 === 'm/s' && op === 'divide' && ing2 === 's') {
+                 resultHTML = `
+                    <h3>Thật tuyệt! Em vừa nấu món Gia tốc!</h3>
+                    <p><strong>Công thức:</strong> Vận tốc / Giây</p>
+                    <p><strong>Đơn vị:</strong> m/s²</p>
+                    <p><em>Món này có "cú hích" bất ngờ! Nó cho biết "hương vị của sự thay đổi vận tốc", mô tả một vật tăng tốc hay giảm tốc nhanh đến mức nào.</em></p>
+                `;
+            }
+            // Recipe for Momentum
+            else if (((ing1 === 'kg' && ing2 === 'm/s') || (ing1 === 'm/s' && ing2 === 'kg')) && op === 'multiply') {
+                resultHTML = `
+                    <h3>Wow! Một món ăn kinh điển: Động lượng!</h3>
+                    <p><strong>Công thức:</strong> Kilogam * Vận tốc</p>
+                    <p><strong>Đơn vị:</strong> kg·m/s</p>
+                    <p><em>Món này mô tả "lượng chuyển động" của một vật. Một chiếc xe tải dù chạy chậm cũng có động lượng lớn hơn một viên bi bay nhanh!</em></p>
+                `;
+            }
+             // Recipe for Density
+            else if (ing1 === 'kg' && op === 'divide' && ing2 === 'm') {
+                 resultHTML = `
+                    <h3>Chưa đúng lắm... nhưng rất thú vị!</h3>
+                    <p>Công thức <strong>kg / m</strong> tạo ra "Khối lượng trên một đơn vị chiều dài". Nó hữu ích để mô tả một sợi dây hay một thanh xà. Nhưng để tạo ra <strong>Khối lượng riêng</strong> quen thuộc, em cần chia <strong>Kilogam (kg)</strong> cho <strong>Mét khối (m³)</strong> (thể tích) nhé!</p>
+                `;
+            }
+            // Default case for unknown recipes
+            else {
+                resultHTML = `
+                    <h3>Hmm, một công thức sáng tạo!</h3>
+                    <p>Sự kết hợp giữa <strong>${ing1}</strong>, phép toán <strong>${op === 'multiply' ? 'nhân' : 'chia'}</strong>, và <strong>${ing2}</strong> chưa tạo thành một "món ăn" phổ biến nào trong thực đơn vật lý cơ bản.</p>
+                    <p><em>Nhưng đừng nản lòng! Khoa học chính là thử nghiệm. Hãy tiếp tục kết hợp nhé!</em></p>
+                `;
+            }
+
+            resultDiv.innerHTML = resultHTML;
+        }
+    </script>
+
+</body>
+</html>
