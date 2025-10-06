@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn tập Vật lý 12 - Chuyên đề Định luật Boyle-Mariotte</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --background-color: #f0f4f9;
+            --text-color: #212529;
+            --font-family: 'Be Vietnam Pro', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px 30px 30px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .intro {
+            color: var(--secondary-color);
+            font-size: 1.1em;
+        }
+
+        /* Tab Styles */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            padding: 12px 20px;
+            cursor: pointer;
+            border: none;
+            background-color: var(--light-color);
+            border-radius: 8px;
+            font-family: var(--font-family);
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #ddd;
+        }
+
+        .tab-button:hover {
+            background-color: #e2e6ea;
+        }
+
+        .tab-button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Quiz Styles */
+        .quiz-header {
+            margin-bottom: 20px;
+        }
+
+        .quiz-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            font-weight: 500;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        .btn {
+            background-color: white;
+            border: 2px solid #ced4da;
+            border-radius: 8px;
+            padding: 15px 20px;
+            font-size: 1.05em;
+            font-family: var(--font-family);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            text-align: left;
+        }
+
+        .btn:hover:not([disabled]) {
+            background-color: #f8f9fa;
+            border-color: var(--primary-color);
+        }
+        
+        .btn.correct {
+            background-color: #d4edda;
+            border-color: var(--success-color);
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .btn.incorrect {
+            background-color: #f8d7da;
+            border-color: var(--danger-color);
+            color: #721c24;
+        }
+
+        .btn:disabled { cursor: not-allowed; }
+
+        .controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .action-btn:hover { background-color: #004494; }
+        .hide { display: none; }
+
+        .explanation-container {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border-left: 5px solid var(--primary-color);
+            border-radius: 0 8px 8px 0;
+        }
+        .explanation-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        .explanation-text { line-height: 1.7; }
+        .score-container { text-align: center; font-size: 1.5em; font-weight: bold; padding: 40px 0; }
+        code {
+            background-color: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #c7254e;
+        }
+        progress {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        progress::-webkit-progress-bar {
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+        progress::-webkit-progress-value {
+            background-color: var(--primary-color);
+            border-radius: 5px;
+            transition: width 0.4s ease;
+        }
+        .progress-text {
+            text-align: right;
+            font-size: 0.9em;
+            color: var(--secondary-color);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Chuyên đề: Định luật Boyle-Mariotte</h1>
+            <p class="intro">Chào các em! Hãy chọn dạng bài tập bên dưới để bắt đầu ôn luyện nhé.</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'theory')">Lý thuyết & Khái niệm</button>
+            <button class="tab-button" onclick="openTab(event, 'basic')">Bài tập Cơ bản</button>
+            <button class="tab-button" onclick="openTab(event, 'advanced')">Bài tập Vận dụng</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="theory" class="tab-content active"></div>
+        <div id="basic" class="tab-content"></div>
+        <div id="advanced" class="tab-content"></div>
+    </div>
+
+    <script>
+        const quizzes = {
+            theory: {
+                title: "Lý thuyết & Khái niệm",
+                data: [
+                    { question: "Rèn luyện 1.1: Biểu thức nào sau đây biểu diễn đúng mối liên hệ giữa áp suất p và thể tích V trong quá trình biến đổi đẳng nhiệt của một lượng khí xác định?", options: ["p ~ 1/V", "p ~ V", "p ~ V²", "p ~ 1/V²"], answer: "p ~ 1/V", explanation: "<strong>Đáp án đúng là A.</strong><br>Theo định luật Boyle-Mariotte, trong quá trình đẳng nhiệt, áp suất tỉ lệ nghịch với thể tích: <code>pV = Const</code>, suy ra <code>p ~ 1/V</code>." },
+                    { question: "Rèn luyện 1.2: Tập hợp ba thông số nào sau đây xác định trạng thái của một lượng khí xác định?", options: ["Áp suất, thể tích, khối lượng", "Áp suất, nhiệt độ, thể tích", "Thể tích, khối lượng, áp suất", "Áp suất, nhiệt độ, khối lượng"], answer: "Áp suất, nhiệt độ, thể tích", explanation: "<strong>Đáp án đúng là B.</strong><br>Trạng thái của một lượng khí được xác định bởi ba thông số: áp suất (p), thể tích (V) và nhiệt độ (T). Khối lượng không phải là thông số độc lập vì nó đã được cố định." },
+                    { question: "Rèn luyện 1.3: Quá trình nào sau đây là đẳng quá trình?", options: ["Đun nóng khí trong một bình đậy kín.", "Không khí trong quả bóng bay bị phơi nắng, nổ ra làm căng bóng.", "Đun nóng khí trong cylinder, khí nở ra đẩy piston chuyển động.", "Cả ba quá trình trên đều không phải là đẳng quá trình."], answer: "Đun nóng khí trong một bình đậy kín.", explanation: "<strong>Đáp án đúng là A.</strong><br>Quá trình đẳng tích: thể tích không đổi. Khi đun nóng khí trong bình đậy kín, thể tích khí không đổi, nên đó là quá trình đẳng tích." },
+                    { question: "Rèn luyện 1.4: Hệ thức nào sau đây là của định luật Boyle?", options: ["p₁V₂ = p₂V₁", "p/V = Const", "pV = Const", "V/p = Const"], answer: "pV = Const", explanation: "<strong>Đáp án đúng là C.</strong><br>Định luật Boyle-Mariotte phát biểu: Trong quá trình đẳng nhiệt, tích của áp suất và thể tích là một hằng số: <code>pV = Const</code>." },
+                    { question: "Rèn luyện 1.5: Một quả bóng không khí ban đầu có thể tích V₀ được hình thành từ đáy của một hồ cá (ở độ sâu h). Quả bóng nổi lên mặt nước. Cho rằng trong quá trình trên nhiệt độ của không khí trong quả bóng là không đổi và áp suất của không khí trong quả bóng tại mặt hồ bằng áp suất khí quyển p₀. Thể tích của quả bóng khi nó vừa tới mặt hồ là:", options: ["V₀", "p₀V₀ / ρgh", "V₀ / (1 + ρgh/p₀)", "V₀(1 + ρgh/p₀)"], answer: "V₀(1 + ρgh/p₀)", explanation: "<strong>Đáp án đúng là D.</strong><br>Tại đáy hồ: P₁ = p₀ + ρgh, V₁ = V₀.<br>Tại mặt hồ: P₂ = p₀, V₂ = ?<br>Áp dụng định luật Boyle: <code>P₁V₁ = P₂V₂</code><br><code>(p₀ + ρgh)V₀ = p₀ * V₂</code><br><code>V₂ = V₀ * (p₀ + ρgh)/p₀ = V₀(1 + ρgh/p₀)</code>." },
+                    { question: "Rèn luyện 1.6: Đường nào sau đây không biểu diễn quá trình đẳng nhiệt?", options: ["Hình 1 (p-V đồ thị, đường cong hypebol)", "Hình 2 (p-V đồ thị, đường thẳng ngang)", "Hình 3 (T-V đồ thị, đường thẳng ngang)", "Hình 4 (T-p đồ thị, đường thẳng ngang)"], answer: "Hình 2 (p-V đồ thị, đường thẳng ngang)", explanation: "<strong>Đáp án đúng là B.</strong><br>Quá trình đẳng nhiệt có nhiệt độ T không đổi. Trên đồ thị p-V, nó là một đường hypebol. Trên đồ thị T-V hoặc T-p, nó là một đường thẳng ngang (vì T không đổi). Đường thẳng ngang trên đồ thị p-V biểu diễn quá trình đẳng áp (P không đổi), không phải đẳng nhiệt." },
+                    { question: "Rèn luyện 1.7: Biểu thức nào sau đây biểu diễn đúng mối liên hệ giữa áp suất p và khối lượng riêng ρ trong quá trình biến đổi đẳng nhiệt của một lượng khí xác định?", options: ["p₁/ρ₂ = p₂/ρ₁", "p ~ 1/ρ", "p₁/ρ₁ = p₂/ρ₂", "ρ.p = Const"], answer: "p₁/ρ₁ = p₂/ρ₂", explanation: "<strong>Đáp án đúng là C.</strong><br>Ta có: <code>PV = Const</code>. Mà khối lượng riêng <code>ρ = m/V</code>, với khối lượng khí m không đổi, ta có <code>V = m/ρ</code>.<br>Thay vào biểu thức định luật: <code>P * (m/ρ) = Const</code>.<br>Vì m là hằng số, ta có <code>P/ρ = Const/m = hằng số mới</code>. Vậy <code>p ~ ρ</code> (p tỉ lệ thuận với ρ) hay <code>p₁/ρ₁ = p₂/ρ₂</code>." },
+                    { question: "Rèn luyện 1.8: Trong một quá trình biến đổi đẳng nhiệt của một lượng khí xác định, nếu áp suất tăng lên 3 lần thì thể tích của lượng khí này sẽ:", options: ["tăng lên 3 lần", "giảm đi 3 lần", "giảm đi 2 lần", "tăng lên 2 lần"], answer: "giảm đi 3 lần", explanation: "<strong>Đáp án đúng là B.</strong><br>Vì áp suất và thể tích tỉ lệ nghịch với nhau. Khi áp suất tăng 3 lần, thể tích phải giảm đi 3 lần để tích <code>P*V</code> không đổi." },
+                    { question: "Rèn luyện 1.10: Một lượng khí xác định biến đổi đẳng nhiệt từ trạng thái (1) sang trạng thái (2) như hình vẽ. Áp suất của chất khí ở trạng thái (2) bằng bao nhiêu? (Hình vẽ: p(atm) vs V, từ (1): p=4atm, V=1L đến (2): V=4L)", options: ["3 atm", "2 atm", "1 atm", "0.5 atm"], answer: "1 atm", explanation: "<strong>Đáp án đúng là C.</strong><br>Áp dụng định luật Boyle: <code>P₁V₁ = P₂V₂</code>.<br><code>4 * 1 = P₂ * 4</code><br><code>P₂ = 4 / 4 = 1 atm</code>." },
+                    { question: "Rèn luyện 1.21: Cho các phát biểu bên dưới về quá trình đẳng nhiệt. Phát biểu nào là đúng, phát biểu nào là sai?", options: ["a) Quá trình biến đổi trạng thái của một lượng khí trong đó nhiệt độ được giữ không đổi được gọi là quá trình đẳng nhiệt.", "b) Trong quá trình đẳng nhiệt của một lượng khí xác định thì áp suất tỉ lệ với thể tích.", "c) Trong hệ tọa độ pOV, đường đẳng nhiệt của một lượng khí xác định có dạng là một hypebol.", "d) Một cylinder chứa khí lí tưởng ở áp suất p₀. Piston nén khí trong cylinder xuống còn làm thể tích giảm 3 lần. Coi nhiệt độ của quá trình trên là không đổi. Áp suất trong cylinder lúc này bằng p₀/3."], answer: "a) Quá trình biến đổi trạng thái của một lượng khí trong đó nhiệt độ được giữ không đổi được gọi là quá trình đẳng nhiệt.", explanation: "<strong>Đáp án đúng là A (đúng).</strong><br>B (sai): Áp suất tỉ lệ nghịch với thể tích, không phải tỉ lệ thuận.<br>C (đúng): Đường đẳng nhiệt trong hệ tọa độ p-V là một đường hypebol.<br>D (sai): Nếu thể tích giảm 3 lần, áp suất sẽ tăng 3 lần, tức là bằng 3p₀, không phải p₀/3." },
+                    { question: "Rèn luyện 1.22: Cho các phát biểu bên dưới về định luật Boyle. Phát biểu nào là đúng, phát biểu nào là sai?", options: ["a) Định luật Boyle chỉ đúng khi nhiệt độ và khối lượng khí không đổi.", "b) Trong quá trình đẳng nhiệt của một lượng khí lí tưởng xác định áp suất tỉ lệ thuận với khối lượng riêng của khí đó.", "c) Đường đẳng nhiệt trong hệ tọa độ pOV có dạng là một hypebol.", "d) Áp suất của một lượng khí tăng tỉ lệ thuận với thể tích của nó."], answer: "a) Định luật Boyle chỉ đúng khi nhiệt độ và khối lượng khí không đổi.", explanation: "<strong>Đáp án đúng là A (đúng).</strong><br>B (đúng): Vì <code>p ~ ρ</code> trong quá trình đẳng nhiệt.<br>C (đúng): Đường đẳng nhiệt trong hệ tọa độ p-V là một đường hypebol.<br>D (sai): Áp suất và thể tích tỉ lệ nghịch, không phải tỉ lệ thuận." }
+                ]
+            },
+            basic: {
+                title: "Bài tập Tính toán Cơ bản",
+                data: [
+                    { question: "Rèn luyện 1.13: Một lượng khí ở nhiệt độ 18°C có thể tích 1 m³ và áp suất 1 atm. Người ta nén đẳng nhiệt đến áp suất 3,5 atm. Thể tích của khối khí sau khi nén là:", options: ["3.2 m³", "0.286 m³", "5.3 m³", "6.2 m³"], answer: "0.286 m³", explanation: "<strong>Đáp án đúng là B.</strong><br>Trạng thái 1: V₁=1 m³, P₁=1 atm.<br>Trạng thái 2: P₂=3.5 atm, V₂=?<br>Áp dụng <code>P₁V₁ = P₂V₂</code>:<br><code>1 * 1 = 3.5 * V₂</code><br><code>V₂ = 1 / 3.5 ≈ 0.286 m³</code>." },
+                    { question: "Rèn luyện 1.14: Khí được nén đẳng nhiệt từ thể tích 6 L đến 4 L, áp suất của khí tăng lên 0,75 at. Áp suất ban đầu của chất khí là:", options: ["1,5 at", "1,0 at", "0,75 at", "0,25 at"], answer: "1,5 at", explanation: "<strong>Đáp án đúng là A.</strong><br>Trạng thái 1: V₁=6 L, P₁=?<br>Trạng thái 2: V₂=4 L, P₂ = P₁ + 0.75 at.<br>Áp dụng <code>P₁V₁ = P₂V₂</code>:<br><code>P₁ * 6 = (P₁ + 0.75) * 4</code><br><code>6P₁ = 4P₁ + 3</code><br><code>2P₁ = 3</code><br><code>P₁ = 1.5 at</code>." },
+                    { question: "Rèn luyện 1.15: Một lượng khí xác định ở áp suất 3 atm có thể tích 10 L. Nén đẳng nhiệt đến áp suất 6 atm thì thể tích là:", options: ["1.5 L", "5.0 L", "2.0 L", "2.5 L"], answer: "5.0 L", explanation: "<strong>Đáp án đúng là B.</strong><br>Trạng thái 1: P₁=3 atm, V₁=10 L.<br>Trạng thái 2: P₂=6 atm, V₂=?<br>Áp dụng <code>P₁V₁ = P₂V₂</code>:<br><code>3 * 10 = 6 * V₂</code><br><code>V₂ = 30 / 6 = 5.0 L</code>." },
+                    { question: "Rèn luyện 1.17: Nén đẳng nhiệt một khối khí từ 5 L, 2 atm. Áp suất sau đó tăng thêm 0,5 atm. Thể tích lúc sau là:", options: ["1.5 L", "5 L", "2 L", "4 L"], answer: "4 L", explanation: "<strong>Đáp án đúng là D.</strong><br>Trạng thái 1: V₁=5 L, P₁=2 atm.<br>Trạng thái 2: P₂ = P₁ + 0.5 = 2.5 atm, V₂=?<br>Áp dụng <code>P₁V₁ = P₂V₂</code>:<br><code>2 * 5 = 2.5 * V₂</code><br><code>V₂ = 10 / 2.5 = 4 L</code>." },
+                    { question: "Rèn luyện 1.18: 6 L khí giãn nở đẳng nhiệt đến 9 L, áp suất giảm 500 kPa. Áp suất ban đầu p₁ và lúc sau p₂ của chất khí tương ứng là:", options: ["p₁=1500 kPa, p₂=1000 kPa", "p₁=1200 kPa, p₂=800 kPa", "p₁=1000 kPa, p₂=500 kPa", "p₁=900 kPa, p₂=1200 kPa"], answer: "p₁=1500 kPa, p₂=1000 kPa", explanation: "<strong>Đáp án đúng là A.</strong><br>Ta có V₁=6L, V₂=9L và P₁ - P₂ = 500 kPa.<br>Từ <code>P₁V₁ = P₂V₂</code> => <code>6P₁ = 9P₂</code> => <code>2P₁ = 3P₂</code> (1)<br>Từ <code>P₁ = P₂ + 500</code> (2). Thế (2) vào (1):<br><code>2(P₂ + 500) = 3P₂</code> => <code>2P₂ + 1000 = 3P₂</code> => <code>P₂ = 1000 kPa</code>.<br>Suy ra <code>P₁ = 1000 + 500 = 1500 kPa</code>." },
+                    { question: "Rèn luyện 1.26: Một quả bóng có chứa 0,04 m³ khí ở áp suất 120 kPa. Nếu giảm thể tích của quả bóng xuống còn 0,025 m³ ở nhiệt độ không đổi thì áp suất khí trong quả bóng là bao nhiêu kPa?", options: ["190 kPa", "192 kPa", "200 kPa", "188 kPa"], answer: "192 kPa", explanation: "<strong>Đáp án đúng là B.</strong><br>Trạng thái 1: V₁=0.04 m³, P₁=120 kPa.<br>Trạng thái 2: V₂=0.025 m³, P₂=?<br>Áp dụng <code>P₁V₁ = P₂V₂</code>:<br><code>120 * 0.04 = P₂ * 0.025</code><br><code>P₂ = (120 * 0.04) / 0.025 = 192 kPa</code>." }
+                ]
+            },
+            advanced: {
+                title: "Bài tập Vận dụng",
+                data: [
+                    { question: "Rèn luyện 1.12: Một bọt khí ở đáy hồ sâu 5 m nổi lên mặt nước. Giả sử rằng nhiệt độ ở đáy hồ và ở mặt nước là như nhau. Thể tích của bọt khí đã tăng lên bao nhiêu lần? (Cho áp suất khí quyển p₀ = 10⁵ Pa, khối lượng riêng của nước ρ = 1000 kg/m³, gia tốc trọng trường g = 10 m/s²)", options: ["tăng lên 3 lần", "giảm đi 1,5 lần", "giảm đi 3 lần", "tăng lên 1,5 lần"], answer: "tăng lên 1,5 lần", explanation: "<strong>Đáp án đúng là D.</strong><br>Trạng thái 1 (đáy hồ): P₁ = P(kq) + ρgh = 10⁵ + 1000*10*5 = 1.5*10⁵ Pa. Thể tích là V₁.<br>Trạng thái 2 (mặt nước): P₂ = P(kq) = 10⁵ Pa. Thể tích là V₂.<br>Áp dụng <code>P₁V₁ = P₂V₂</code>:<br><code>1.5*10⁵ * V₁ = 10⁵ * V₂</code><br><code>V₂/V₁ = 1.5</code>. Vậy thể tích tăng 1.5 lần." },
+                    { question: "Rèn luyện 1.27: Tính độ sâu của đáy hồ, nơi có bong bóng khí nổi lên từ đáy. Cho áp suất tại mặt nước là 10⁵ Pa, khối lượng riêng của nước là 1000 kg/m³, gia tốc trọng trường g = 10 m/s². Biết thể tích của bong bóng khí tăng gấp 1,2 lần so với ở đáy hồ.", options: ["2 m", "1.5 m", "2.5 m", "1 m"], answer: "2 m", explanation: "<strong>Đáp án đúng là A.</strong><br>Gọi h là độ sâu cần tìm.<br>Trạng thái 1 (đáy hồ): P₁ = P(kq) + ρgh = 10⁵ + 1000*10*h = 10⁵ + 10⁴h Pa. Thể tích là V₁.<br>Trạng thái 2 (mặt nước): P₂ = P(kq) = 10⁵ Pa. Thể tích là V₂ = 1.2 V₁.<br>Áp dụng <code>P₁V₁ = P₂V₂</code>:<br><code>(10⁵ + 10⁴h) * V₁ = 10⁵ * 1.2 V₁</code><br><code>10⁵ + 10⁴h = 1.2 * 10⁵</code><br><code>10⁴h = 0.2 * 10⁵ = 2 * 10⁴</code><br><code>h = 2 m</code>." },
+                    { question: "Rèn luyện 1.28: Biết ở điều kiện tiêu chuẩn (1 atm, 0°C), khối lượng riêng của Oxygen là 1,43 kg/m³. Tính khối lượng khí Oxygen đựng trong một bình thể tích 10 L dưới áp suất 150 atm ở nhiệt độ 0°C.", options: ["2.00 kg", "1.50 kg", "2.15 kg", "2.50 kg"], answer: "2.15 kg", explanation: "<strong>Đáp án đúng là C.</strong><br>Bước 1: Tìm thể tích V(đktc) của khí trong bình nếu giãn ra ở đktc (quá trình đẳng nhiệt).<br><code>P(bình)V(bình) = P(đktc)V(đktc)</code><br><code>150 * 10 = 1 * V(đktc)</code> => <code>V(đktc) = 1500 L = 1.5 m³</code>.<br>Bước 2: Tính khối lượng.<br><code>m = ρ(đktc) * V(đktc) = 1.43 kg/m³ * 1.5 m³ = 2.145 kg</code>.<br>Làm tròn đến hàng phần trăm ta được 2.15 kg." },
+                    { question: "Rèn luyện 1.29: Mỗi lần bơm đưa được V₀ = 80 cm³ không khí vào ruột xe. Sau khi bơm diện tích tiếp xúc của các vỏ xe với mặt đường là 30 cm². Thể tích của ruột xe sau khi bơm là 2000 cm³. Áp suất khí quyển p₀ = 1 atm. Trọng lượng xe là 600 N. Coi nhiệt độ là không đổi, thể tích của lốp xe thay đổi không đáng kể trước và sau khi bơm. Xác định số lần bơm.", options: ["15 lần", "20 lần", "25 lần", "30 lần"], answer: "25 lần", explanation: "<strong>Đáp án đúng là C.</strong><br>Áp suất trong ruột xe sau khi bơm: <code>P = F/S = 600 N / (30 * 10⁻⁴ m²) = 2 * 10⁵ Pa = 2 atm</code>.<br>Áp suất ban đầu (trước khi bơm) là p₀ = 1 atm.<br>Thể tích ruột xe là V = 2000 cm³.<br>Gọi n là số lần bơm. Tổng thể tích khí (ở áp suất p₀) được bơm vào là n * V₀ = n * 80 cm³.<br>Áp dụng định luật Boyle cho toàn bộ lượng khí trong ruột xe sau khi bơm (coi như tổng hợp của khí ban đầu trong ruột xe và khí được bơm vào, tất cả ở áp suất p₀):<br><code>P₀ * (V + n*V₀) = P * V</code><br><code>1 * (2000 + n*80) = 2 * 2000</code><br><code>2000 + 80n = 4000</code><br><code>80n = 2000</code><br><code>n = 25</code>." },
+                    { question: "Rèn luyện 1.36: Hai bình cầu, được nối với nhau bằng một ống có khóa, chứa hai chất khí không tác dụng hóa học với nhau, ở cùng nhiệt độ. Áp suất khí trong hai bình là p₁ = 2.10⁵ N/m² và p₂ = 1.10⁶ N/m². Mở khóa nhẹ nhàng để hai bình thông với nhau sao cho nhiệt độ không đổi. Khi cân bằng xảy ra, áp suất ở hai bình là p = 4.10⁵ N/m². Tính tỉ số thể tích của hai bình cầu.", options: ["V₁/V₂ = 1", "V₁/V₂ = 2", "V₁/V₂ = 3", "V₁/V₂ = 4"], answer: "V₁/V₂ = 3", explanation: "<strong>Đáp án đúng là C.</strong><br>Áp dụng nguyên lý bảo toàn lượng khí (biến thể của định luật Boyle): Tổng (PV) trước = Tổng (PV) sau.<br><code>P₁V₁ + P₂V₂ = P(V₁ + V₂)</code><br><code>2.10⁵*V₁ + 10*10⁵*V₂ = 4.10⁵*(V₁ + V₂)</code><br>Chia cả 2 vế cho 10⁵: <code>2V₁ + 10V₂ = 4V₁ + 4V₂</code><br><code>6V₂ = 2V₁</code> => <code>V₁/V₂ = 6/2 = 3</code>." }
+                ]
+            }
+        };
+
+        function openTab(evt, tabName) {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        function createQuizHTML(quizKey) {
+            const quiz = quizzes[quizKey];
+            const quizContainer = document.getElementById(quizKey);
+            
+            quizContainer.innerHTML = `
+                <div class="quiz-container" id="${quizKey}-quiz">
+                    <div class="quiz-header">
+                        <div class="quiz-title">${quiz.title}</div>
+                        <progress id="${quizKey}-progress" value="0" max="${quiz.data.length}"></progress>
+                        <div class="progress-text" id="${quizKey}-progress-text">Câu 0/${quiz.data.length}</div>
+                    </div>
+                    <div id="${quizKey}-question-container">
+                        <div class="question-text" id="${quizKey}-question-text"></div>
+                    </div>
+                    <div id="${quizKey}-answer-buttons" class="btn-grid"></div>
+                    <div id="${quizKey}-explanation-container" class="explanation-container hide">
+                        <div class="explanation-title">Giải thích chi tiết</div>
+                        <div class="explanation-text" id="${quizKey}-explanation-text"></div>
+                    </div>
+                    <div class="controls">
+                        <button class="action-btn next-btn hide" id="${quizKey}-next-btn">Câu tiếp theo</button>
+                    </div>
+                </div>
+                <div class="score-container hide" id="${quizKey}-score-container"></div>
+                <div class="controls">
+                     <button class="action-btn restart-btn hide" id="${quizKey}-restart-btn">Làm lại</button>
+                </div>
+            `;
+        }
+
+        function startQuiz(quizKey) {
+            const quiz = quizzes[quizKey];
+            quiz.currentIndex = 0;
+            quiz.score = 0;
+            
+            const scoreContainer = document.getElementById(`${quizKey}-score-container`);
+            const quizContainer = document.getElementById(`${quizKey}-quiz`);
+            const restartButton = document.getElementById(`${quizKey}-restart-btn`);
+            
+            scoreContainer.classList.add('hide');
+            quizContainer.classList.remove('hide');
+            restartButton.classList.add('hide');
+
+            showQuestion(quizKey);
+        }
+
+        function showQuestion(quizKey) {
+            resetState(quizKey);
+            const quiz = quizzes[quizKey];
+            const currentQuestion = quiz.data[quiz.currentIndex];
+            const questionTextElement = document.getElementById(`${quizKey}-question-text`);
+            const answerButtonsElement = document.getElementById(`${quizKey}-answer-buttons`);
+            const progress = document.getElementById(`${quizKey}-progress`);
+            const progressText = document.getElementById(`${quizKey}-progress-text`);
+
+            questionTextElement.innerText = currentQuestion.question;
+            progress.value = quiz.currentIndex;
+            progressText.innerText = `Câu ${quiz.currentIndex + 1}/${quiz.data.length}`;
+
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.innerText = option;
+                button.classList.add('btn');
+                button.addEventListener('click', () => selectAnswer(button, quizKey));
+                answerButtonsElement.appendChild(button);
+            });
+        }
+        
+        function resetState(quizKey) {
+            document.getElementById(`${quizKey}-next-btn`).classList.add('hide');
+            document.getElementById(`${quizKey}-explanation-container`).classList.add('hide');
+            const answerButtonsElement = document.getElementById(`${quizKey}-answer-buttons`);
+            while(answerButtonsElement.firstChild) {
+                answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+            }
+        }
+
+        // ✅ HÀM ĐÃ ĐƯỢC SỬA THEO YÊU CẦU
+        function selectAnswer(selectedButton, quizKey) {
+            const quiz = quizzes[quizKey];
+            const currentQuestion = quiz.data[quiz.currentIndex];
+            const correctAnswer = currentQuestion.answer;
+            const isCorrect = selectedButton.innerText === correctAnswer;
+
+            if (isCorrect) {
+                quiz.score++;
+            }
+
+            // Vô hiệu hóa tất cả các nút
+            const allButtons = Array.from(document.getElementById(`${quizKey}-answer-buttons`).children);
+            allButtons.forEach(button => {
+                button.disabled = true;
+            });
+
+            // Đặt màu cho nút người dùng chọn
+            if (isCorrect) {
+                selectedButton.classList.add('correct');
+            } else {
+                selectedButton.classList.add('incorrect');
+                // Tìm và highlight đáp án đúng
+                allButtons.forEach(button => {
+                    if (button.innerText === correctAnswer) {
+                        button.classList.add('correct');
+                    }
+                });
+            }
+
+            // Hiển thị giải thích
+            document.getElementById(`${quizKey}-explanation-text`).innerHTML = currentQuestion.explanation;
+            document.getElementById(`${quizKey}-explanation-container`).classList.remove('hide');
+
+            const progress = document.getElementById(`${quizKey}-progress`);
+            progress.value = quiz.currentIndex + 1;
+            
+            if (quiz.currentIndex + 1 < quiz.data.length) {
+                document.getElementById(`${quizKey}-next-btn`).classList.remove('hide');
+            } else {
+                showScore(quizKey);
+            }
+        }
+
+        function showNextQuestion(quizKey) {
+            quizzes[quizKey].currentIndex++;
+            showQuestion(quizKey);
+        }
+
+        function showScore(quizKey) {
+            const quiz = quizzes[quizKey];
+            document.getElementById(`${quizKey}-quiz`).classList.add('hide');
+            const scoreContainer = document.getElementById(`${quizKey}-score-container`);
+            scoreContainer.innerHTML = `Hoàn thành!<br>Điểm của em: ${quiz.score} / ${quiz.data.length}`;
+            scoreContainer.classList.remove('hide');
+            document.getElementById(`${quizKey}-restart-btn`).classList.remove('hide');
+        }
+        
+        // Initialize all quizzes
+        Object.keys(quizzes).forEach(quizKey => {
+            createQuizHTML(quizKey);
+            document.getElementById(`${quizKey}-next-btn`).addEventListener('click', () => showNextQuestion(quizKey));
+            document.getElementById(`${quizKey}-restart-btn`).addEventListener('click', () => startQuiz(quizKey));
+            startQuiz(quizKey);
+        });
+
+        // Set the first tab to be active by default
+        document.querySelector('.tab-button').click();
+
+    </script>
+
+</body>
+</html>
