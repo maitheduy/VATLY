@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài toán khung sắt và xe ô tô</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .problem-section, .solution-section {
+            margin-bottom: 30px;
+        }
+        .problem-section h2, .solution-section h2 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+        .diagram {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            background-color: white;
+            border: 1px solid #ddd;
+            margin: 0 auto;
+        }
+        .step {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+        }
+        .formula {
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f0f7ff;
+            border-radius: 4px;
+        }
+        .result {
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 1.2em;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff8e1;
+            border-radius: 8px;
+            border: 1px solid #ffd54f;
+        }
+        .note {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bài toán khung sắt và xe ô tô</h1>
+        
+        <div class="problem-section">
+            <h2>Đề bài</h2>
+            <p>Một chiếc ô tô được đặt trên mặt dây dưới của một khung sắt có dạng hình hộp chữ nhật với dây trên là hình chữ nhật \(ABCD\), mặt phẳng (\(ABCD\)) song song với mặt phẳng nằm ngang.</p>
+            <p>Khung sắt đó được buộc vào \(ABC\) của chiếc cần cầu sao cho các đoạn dây cáp \(EA, EB, EC, ED\) có độ dài bằng nhau và cùng tạo với mặt phẳng (\(ABCD\)) một góc \(60^\circ\).</p>
+            <p>Chiếc cần cầu kéo khung sắt lên theo phương thẳng đứng. Tính khối lượng của chiếc xe ô tô (đơn vị tấn và làm tròn đến chữ số thập phân thứ hai), biết rằng các lực căng \(F_1, F_2, F_3, F_4\) đều có cường độ là \(N\) và khối lượng của khung sắt là \(550kg\).</p>
+            <p class="note">Biết rằng, nếu một vật có khối lượng \(m (kg)\) thì lực hấp dẫn \(\overline{P}\) (đơn vị là \(N\)) của Trái đất tác dụng lên vật được xác định theo công thức \(\overline{P} = mg\), trong đó \(g\) là gia tốc rơi tự do có độ lớn \(g = 10 \, \text{m/s}^2\).</p>
+            
+            <div class="diagram-container">
+                <h3>Hình vẽ minh họa</h3>
+                <div class="diagram" id="diagram"></div>
+            </div>
+        </div>
+        
+        <div class="solution-section">
+            <h2>Lời giải chi tiết</h2>
+            
+            <div class="step">
+                <h3>Bước 1: Phân tích lực</h3>
+                <p>Có 4 dây cáp: EA, EB, EC, ED, tất cả đều tạo với mặt phẳng (ABCD) một góc \(60^\circ\).</p>
+                <p>Các lực căng dây: \(F_1, F_2, F_3, F_4\) đều có cường độ là \(N\).</p>
+                <p>Do hệ thống cân bằng, tổng các lực theo phương thẳng đứng phải bằng 0.</p>
+            </div>
+            
+            <div class="step">
+                <h3>Bước 2: Tính thành phần thẳng đứng của lực căng</h3>
+                <p>Mỗi lực căng dây có độ lớn \(N\) và tạo với mặt phẳng ngang một góc \(60^\circ\).</p>
+                <p>Thành phần thẳng đứng của mỗi lực căng là: \(N \cdot \sin(60^\circ) = N \cdot \frac{\sqrt{3}}{2}\)</p>
+            </div>
+            
+            <div class="step">
+                <h3>Bước 3: Tổng lực thẳng đứng</h3>
+                <p>Có 4 dây cáp, nên tổng lực thẳng đứng từ các dây cáp là:</p>
+                <div class="formula">
+                    \(F_{\text{tổng}} = 4 \cdot N \cdot \frac{\sqrt{3}}{2} = 2\sqrt{3} \cdot N\)
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>Bước 4: Tính trọng lực</h3>
+                <p>Trọng lực tác dụng lên hệ thống bao gồm:</p>
+                <ul>
+                    <li>Khung sắt: \(m_{\text{khung}} = 550kg\)</li>
+                    <li>Ô tô: \(m_{\text{ôtô}}\) (chưa biết)</li>
+                </ul>
+                <p>Tổng trọng lực: \(P = (m_{\text{khung}} + m_{\text{ôtô}}) \cdot g\)</p>
+            </div>
+            
+            <div class="step">
+                <h3>Bước 5: Áp dụng điều kiện cân bằng</h3>
+                <p>Hệ thống cân bằng nên:</p>
+                <div class="formula">
+                    \(F_{\text{tổng}} = P\)
+                </div>
+                <div class="formula">
+                    \(2\sqrt{3} \cdot N = (m_{\text{khung}} + m_{\text{ôtô}}) \cdot g\)
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>Bước 6: Giải phương trình tìm khối lượng ô tô</h3>
+                <p>Từ phương trình trên:</p>
+                <div class="formula">
+                    \(m_{\text{ôtô}} = \frac{2\sqrt{3} \cdot N}{g} - m_{\text{khung}}\)
+                </div>
+                <p>Thay \(g = 10 \, \text{m/s}^2\), \(m_{\text{khung}} = 550kg\):</p>
+                <div class="formula">
+                    \(m_{\text{ôtô}} = \frac{2\sqrt{3} \cdot N}{10} - 550\)
+                </div>
+                <p>Để có kết quả cụ thể, chúng ta cần giá trị của \(N\). Tuy nhiên, đề bài không cung cấp giá trị này.</p>
+                <p class="note">Lưu ý: Đề bài không cung cấp giá trị cụ thể của \(N\), vì vậy chúng ta chỉ có thể biểu diễn kết quả theo \(N\).</p>
+            </div>
+            
+            <div class="result">
+                Khối lượng của chiếc xe ô tô là: \(m_{\text{ôtô}} = \frac{\sqrt{3} \cdot N}{5} - 550\) (kg)
+            </div>
+            
+            <div class="step">
+                <h3>Bước 7: Chuyển đổi sang tấn và làm tròn</h3>
+                <p>Để chuyển sang tấn, chia cho 1000:</p>
+                <div class="formula">
+                    \(m_{\text{ôtô}} = \left(\frac{\sqrt{3} \cdot N}{5000} - 0.55\right)\) (tấn)
+                </div>
+                <p>Làm tròn đến chữ số thập phân thứ hai.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Khởi tạo scene, camera và renderer
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, 600/400, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(600, 400);
+        document.getElementById('diagram').appendChild(renderer.domElement);
+
+        // Thêm ánh sáng
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(10, 20, 15);
+        scene.add(directionalLight);
+
+        // Tạo hệ trục tọa độ
+        const axesHelper = new THREE.AxesHelper(5);
+        scene.add(axesHelper);
+
+        // Tạo khung sắt hình hộp chữ nhật
+        const boxGeometry = new THREE.BoxGeometry(4, 1, 2);
+        const boxMaterial = new THREE.MeshPhongMaterial({ 
+            color: 0x3498db, 
+            transparent: true, 
+            opacity: 0.7 
+        });
+        const box = new THREE.Mesh(boxGeometry, boxMaterial);
+        scene.add(box);
+
+        // Tạo các điểm A, B, C, D
+        const pointsGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+        const pointsMaterial = new THREE.MeshBasicMaterial({ color: 0xe74c3c });
+        
+        const pointA = new THREE.Mesh(pointsGeometry, pointsMaterial);
+        pointA.position.set(-2, 0.5, 1);
+        scene.add(pointA);
+        
+        const pointB = new THREE.Mesh(pointsGeometry, pointsMaterial);
+        pointB.position.set(2, 0.5, 1);
+        scene.add(pointB);
+        
+        const pointC = new THREE.Mesh(pointsGeometry, pointsMaterial);
+        pointC.position.set(2, 0.5, -1);
+        scene.add(pointC);
+        
+        const pointD = new THREE.Mesh(pointsGeometry, pointsMaterial);
+        pointD.position.set(-2, 0.5, -1);
+        scene.add(pointD);
+
+        // Tạo điểm E (điểm treo)
+        const pointE = new THREE.Mesh(pointsGeometry, pointsMaterial);
+        pointE.position.set(0, 4, 0);
+        scene.add(pointE);
+
+        // Tạo các dây cáp
+        const cableMaterial = new THREE.LineBasicMaterial({ color: 0x2ecc71, linewidth: 2 });
+        
+        const cableEA = new THREE.Line(
+            new THREE.BufferGeometry().setFromPoints([pointE.position, pointA.position]),
+            cableMaterial
+        );
+        scene.add(cableEA);
+        
+        const cableEB = new THREE.Line(
+            new THREE.BufferGeometry().setFromPoints([pointE.position, pointB.position]),
+            cableMaterial
+        );
+        scene.add(cableEB);
+        
+        const cableEC = new THREE.Line(
+            new THREE.BufferGeometry().setFromPoints([pointE.position, pointC.position]),
+            cableMaterial
+        );
+        scene.add(cableEC);
+        
+        const cableED = new THREE.Line(
+            new THREE.BufferGeometry().setFromPoints([pointE.position, pointD.position]),
+            cableMaterial
+        );
+        scene.add(cableED);
+
+        // Đặt vị trí camera
+        camera.position.set(8, 6, 8);
+        camera.lookAt(0, 0, 0);
+
+        // Thêm nhãn cho các điểm
+        function addLabel(text, position) {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = 64;
+            canvas.height = 32;
+            context.fillStyle = 'rgba(0, 0, 0, 0.8)';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.font = 'bold 20px Arial';
+            context.fillStyle = 'white';
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.fillText(text, canvas.width/2, canvas.height/2);
+            
+            const texture = new THREE.CanvasTexture(canvas);
+            const material = new THREE.SpriteMaterial({ map: texture });
+            const sprite = new THREE.Sprite(material);
+            sprite.position.copy(position);
+            sprite.position.y += 0.3;
+            scene.add(sprite);
+        }
+
+        addLabel('E', pointE.position);
+        addLabel('A', pointA.position);
+        addLabel('B', pointB.position);
+        addLabel('C', pointC.position);
+        addLabel('D', pointD.position);
+
+        // Animation
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
